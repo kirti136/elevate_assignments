@@ -1,4 +1,3 @@
-// src/pages/CharacterDetail.jsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import FooterClock from "../components/FooterClock";

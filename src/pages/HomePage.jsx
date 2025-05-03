@@ -1,4 +1,3 @@
-// src/pages/HomePage.jsx
 import { useEffect, useState } from "react";
 import CharacterCard from "../components/CharacterCard";
 import FooterClock from "../components/FooterClock";

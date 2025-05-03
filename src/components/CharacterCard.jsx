@@ -12,7 +12,7 @@ const CharacterCard = ({ character }) => {
         <img
           src={character.image}
           alt={character.name}
-          className="w-full h-60 object-contain"
+          className="w-full h-50 object-contain"
         />
         <div className="p-4 text-center">
           <h2 className="text-xl font-bold">{character.name}</h2>
