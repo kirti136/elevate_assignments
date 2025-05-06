@@ -62,7 +62,9 @@ const TaskForm = ({ onSubmit, selectedTask }) => {
       <input
         type="date"
         name="dueDate"
-        value={task.dueDate}
+        value={
+          task.dueDate ? new Date(task.dueDate).toISOString().split("T")[0] : ""
+        }
         onChange={handleChange}
         className="w-full p-2 rounded bg-gray-700"
       />
