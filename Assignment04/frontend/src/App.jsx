@@ -1,54 +1,29 @@
-import { useEffect, useState } from 'react';
-import TaskForm from './components/TaskForm';
-import TaskList from './components/TaskList';
-import { getTasks, createTask, updateTask, deleteTask } from './api/taskApi';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-export default function App() {
-  const [tasks, setTasks] = useState([]);
-  const [selectedTask, setSelectedTask] = useState(null);
+import Task from "./page/Task";
+import Login from "./page/login";
+import Signup from "./page/Signup";
+import PrivateRoute from "./components/PrivateRoute";
+import Navbar from "./components/Navbar";
 
-  const loadTasks = async () => {
-    try {
-      const res = await getTasks();
-      console.log('Tasks loaded:', res.data);
-      setTasks(res.data.tasks);
-    } catch (err) {
-      console.error('Error loading tasks:', err);
-    }
-  };
-
-  useEffect(() => {
-    loadTasks();
-  }, []);
-
-  const handleSubmit = async (task) => {
-    try {
-      if (task.id || task._id) {
-        await updateTask(task.id || task._id, task);
-        setSelectedTask(null);
-      } else {
-        await createTask(task);
-      }
-      loadTasks();
-    } catch (err) {
-      console.error('Error submitting task:', err);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await deleteTask(id);
-      loadTasks();
-    } catch (err) {
-      console.error('Error deleting task:', err);
-    }
-  };
-
+const App = () => {
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
-      <TaskForm onSubmit={handleSubmit} selectedTask={selectedTask} />
-      <TaskList tasks={tasks} onEdit={setSelectedTask} onDelete={handleDelete} />
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Signup />} />
+        <Route
+          path="/tasks"
+          element={
+            <PrivateRoute>
+              <Task />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </Router>
   );
-}
+};
 
+export default App;
