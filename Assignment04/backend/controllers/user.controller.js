@@ -4,12 +4,12 @@ const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { username, email, password, role } = req.body;
 
-    if (!name || !email || !password) {
+    if (!username || !email || !password) {
       return res
         .status(400)
-        .json({ message: "name, email, password required" });
+        .json({ message: "username, email, password required" });
     }
 
     const existingUser = await User.find({ email });
@@ -20,7 +20,7 @@ const register = async (req, res) => {
     const hashedPassword = await argon2.hash(password);
 
     const newUser = new User({
-      name,
+      username,
       email,
       role,
       password: hashedPassword,

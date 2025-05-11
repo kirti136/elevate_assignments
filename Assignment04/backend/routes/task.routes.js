@@ -10,10 +10,10 @@ const authentication = require("../middleware/auth");
 
 const router = Router();
 
-router.post("/", createTask);
-router.get("/", authentication, getTask);
-router.get("/:id", getTaskById);
-router.put("/:id", updateTask);
-router.delete("/:id", deleteTask);
+router.post("/", authentication, createTask);
+router.get("/", getTask);
+router.get("/:id", authentication, getTaskById);
+router.put("/:id", authentication, updateTask);
+router.delete("/:id", authentication, deleteTask);
 
 module.exports = router;
