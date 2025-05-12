@@ -22,10 +22,23 @@ const authentication = async (req, res, next) => {
 
     req.user = decoded;
     next();
-  } catch (error) {9
+  } catch (error) {
     console.error("Authentication error:", error.message);
     return res.status(401).json({ message: "Unauthorized: Invalid token" });
   }
 };
 
-module.exports = authentication;
+const authorization = (data) => {
+  return (req, res, next) => {
+    try {
+      if (!req.user || (!data && data.user.role != req.user.role)) {
+        return res.status(403).json({ message: "Forbidden: Access denied" });
+      }
+      next();
+    } catch (error) {
+      return res.status(403).json({ message: "Forbidden: Access denied" });
+    }
+  };
+};
+
+module.exports = { authentication, authorization };
